@@ -42,6 +42,16 @@
       --switch-knob-shadow: rgba(0, 0, 0, 0.25);
       --switch-icon: #ffffff;
 
+      /* Selection & control buttons */
+      --seen-bg: #eaeaea;
+      --seen-indicator: #000000;
+      --control-btn-bg: rgba(255, 255, 255, 0.12);
+      --control-btn-hover: rgba(255, 255, 255, 0.22);
+      --control-btn-border: rgba(255, 255, 255, 0.28);
+      --control-btn-ink: #ffffff;
+      --control-btn-active-bg: #ffffff;
+      --control-btn-active-ink: #000000;
+
       --radius: 14px;
       --title-h: 56px;
     }
@@ -69,6 +79,15 @@
       --switch-knob: #ffffff;
       --switch-knob-shadow: rgba(255, 255, 255, 0.2);
       --switch-icon: #000000;
+
+      --seen-bg: #1c1c1c;
+      --seen-indicator: #ffffff;
+      --control-btn-bg: rgba(255, 255, 255, 0.1);
+      --control-btn-hover: rgba(255, 255, 255, 0.2);
+      --control-btn-border: rgba(255, 255, 255, 0.25);
+      --control-btn-ink: #ffffff;
+      --control-btn-active-bg: #ffffff;
+      --control-btn-active-ink: #000000;
     }
 
     /* ---------- Base ---------- */
@@ -137,14 +156,116 @@
     .title-row .title-meta {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .title-row .count {
+    .title-tools {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-tool {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 28px;
+      padding: 0 9px;
+      border-radius: 6px;
       font-family: var(--font-ui);
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      color: color-mix(in srgb, var(--head-ink) 65%, transparent);
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      background: var(--control-btn-bg);
+      color: var(--control-btn-ink);
+      border: 1px solid var(--control-btn-border);
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      white-space: nowrap;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-tool:hover {
+      background: var(--control-btn-hover);
+      border-color: var(--control-btn-ink);
+    }
+
+    .btn-tool:active {
+      transform: scale(0.97);
+    }
+
+    .btn-tool.is-hidden {
+      background: var(--control-btn-active-bg);
+      color: var(--control-btn-active-ink);
+      border-color: var(--control-btn-active-bg);
+    }
+
+    .btn-tool svg {
+      width: 14px;
+      height: 14px;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .btn-icon-only {
+      width: 28px;
+      padding: 0;
+    }
+
+    .seen-stats {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 500;
+      color: color-mix(in srgb, var(--head-ink) 75%, transparent);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* Column visibility toggles */
+    :root[data-hide-hi="true"] th.col-hi,
+    :root[data-hide-hi="true"] td.cell-hi {
+      display: none !important;
+    }
+
+    :root[data-hide-en="true"] th.col-en,
+    :root[data-hide-en="true"] td.cell-en {
+      display: none !important;
+    }
+
+    /* Row selection / seen styling */
+    .vocab tbody tr {
+      cursor: pointer;
+      user-select: text;
+    }
+
+    .vocab tbody tr.is-seen td {
+      background: var(--seen-bg);
+      color: color-mix(in srgb, var(--ink) 65%, transparent);
+    }
+
+    .vocab tbody tr.is-seen:hover td {
+      background: var(--hover);
+      color: var(--ink);
+    }
+
+    .vocab tbody tr.is-seen td.cell-hi {
+      color: color-mix(in srgb, var(--ink) 70%, transparent);
+    }
+
+    .vocab tbody tr.is-seen td.cell-no {
+      font-weight: 600;
+      position: relative;
+    }
+
+    .vocab tbody tr.is-seen td.cell-no::before {
+      content: "✓ ";
+      color: var(--seen-indicator);
+      font-weight: bold;
     }
 
     /* ---------- Theme switch ---------- */
@@ -156,6 +277,8 @@
       cursor: pointer;
       border-radius: 999px;
       -webkit-tap-highlight-color: transparent;
+      display: inline-flex;
+      align-items: center;
     }
 
     .theme-toggle:focus-visible {
@@ -164,14 +287,14 @@
     }
 
     .switch-track {
-      --w: 64px;
-      --knob: 26px;
-      --gap: 3px;
+      --w: 52px;
+      --knob: 22px;
+      --gap: 2px;
       --travel: calc(var(--w) - var(--knob) - var(--gap) * 2 - 2px);
       position: relative;
       display: block;
       width: var(--w);
-      height: 32px;
+      height: 28px;
       border-radius: 999px;
       background: var(--switch-track);
       border: 1px solid var(--switch-border);
@@ -205,17 +328,17 @@
     }
 
     .theme-toggle:active .switch-knob {
-      width: calc(var(--knob) + 4px);
+      width: calc(var(--knob) + 3px);
     }
 
     /* Sun and moon swap inside the knob */
     .switch-knob svg {
       grid-area: 1 / 1;
-      width: 15px;
-      height: 15px;
-      fill: none;
-      stroke: var(--switch-icon);
+      width: 13px;
+      height: 13px;
       stroke-width: 2.2;
+      stroke: var(--switch-icon);
+      fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
       transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
@@ -242,7 +365,10 @@
     }
 
     @media (max-width: 479px) {
-      .switch-track { --w: 56px; --knob: 22px; height: 28px; }
+      .switch-track { --w: 46px; --knob: 20px; height: 26px; }
+      .seen-stats { display: none !important; }
+      .btn-tool { height: 26px; padding: 0 7px; font-size: 11px; }
+      .btn-icon-only { width: 26px; padding: 0; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -396,6 +522,17 @@
               <span>Hindi Vocabulary</span>
               <div class="title-meta">
                 <span class="count" id="vocabCount" aria-live="polite"></span>
+                <span class="seen-stats" id="seenCount" aria-live="polite" title="Words marked as seen"></span>
+                <div class="title-tools">
+                  <button type="button" class="btn-tool" id="toggleHiBtn" aria-pressed="false" title="Hide or show Hindi column">
+                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <span>Hindi</span>
+                  </button>
+                  <button type="button" class="btn-tool" id="toggleEnBtn" aria-pressed="false" title="Hide or show English column">
+                    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <span>English</span>
+                  </button>
+                </div>
                 <button type="button" class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
                   <span class="switch-track" aria-hidden="true">
                     <span class="switch-knob">
@@ -403,6 +540,9 @@
                       <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                     </span>
                   </span>
+                </button>
+                <button type="button" class="btn-tool btn-icon-only" id="clearSeenBtn" aria-label="Clear seen words history" title="Clear seen words">
+                  <svg viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                 </button>
               </div>
             </div>
@@ -435,15 +575,23 @@
       const titleEl = document.getElementById('mainTitle');
       const bodyEl = document.getElementById('vocabBody');
       const countEl = document.getElementById('vocabCount');
+      const seenCountEl = document.getElementById('seenCount');
       const themeToggleBtn = document.getElementById('themeToggle');
+      const toggleHiBtn = document.getElementById('toggleHiBtn');
+      const toggleEnBtn = document.getElementById('toggleEnBtn');
+      const clearSeenBtn = document.getElementById('clearSeenBtn');
       const root = document.documentElement;
 
-      const STORAGE_KEY = 'hindi-vocab-theme';
+      const STORAGE_THEME_KEY = 'hindi-vocab-theme';
+      const STORAGE_SEEN_KEY = 'hindi-vocab-seen';
+      const STORAGE_HIDE_HI_KEY = 'hindi-vocab-hide-hi';
+      const STORAGE_HIDE_EN_KEY = 'hindi-vocab-hide-en';
       const DEFAULT_THEME = 'light';
 
+      // --- Theme logic ---
       function getStoredTheme() {
         try {
-          const stored = localStorage.getItem(STORAGE_KEY);
+          const stored = localStorage.getItem(STORAGE_THEME_KEY);
           return stored === 'dark' || stored === 'light' ? stored : null;
         } catch (_) {
           return null;
@@ -463,15 +611,124 @@
         themeToggleBtn.setAttribute('title', label);
       }
 
-      // Light by default; honor a previously chosen theme if one is saved
       applyTheme(getStoredTheme() || DEFAULT_THEME);
 
       themeToggleBtn.addEventListener('click', () => {
         const next = getEffectiveTheme() === 'dark' ? 'light' : 'dark';
         try {
-          localStorage.setItem(STORAGE_KEY, next);
+          localStorage.setItem(STORAGE_THEME_KEY, next);
         } catch (_) {}
         applyTheme(next);
+      });
+
+      // --- Column visibility toggles (Hindi / English) ---
+      function initColumnToggles() {
+        let hideHi = false;
+        let hideEn = false;
+        try {
+          hideHi = localStorage.getItem(STORAGE_HIDE_HI_KEY) === 'true';
+          hideEn = localStorage.getItem(STORAGE_HIDE_EN_KEY) === 'true';
+        } catch (_) {}
+
+        function updateColumnVisibility(col, hidden) {
+          if (col === 'hi') {
+            root.setAttribute('data-hide-hi', String(hidden));
+            toggleHiBtn.classList.toggle('is-hidden', hidden);
+            toggleHiBtn.setAttribute('aria-pressed', String(hidden));
+            toggleHiBtn.title = hidden ? 'Show Hindi column' : 'Hide Hindi column';
+            try { localStorage.setItem(STORAGE_HIDE_HI_KEY, String(hidden)); } catch (_) {}
+          } else if (col === 'en') {
+            root.setAttribute('data-hide-en', String(hidden));
+            toggleEnBtn.classList.toggle('is-hidden', hidden);
+            toggleEnBtn.setAttribute('aria-pressed', String(hidden));
+            toggleEnBtn.title = hidden ? 'Show English column' : 'Hide English column';
+            try { localStorage.setItem(STORAGE_HIDE_EN_KEY, String(hidden)); } catch (_) {}
+          }
+        }
+
+        updateColumnVisibility('hi', hideHi);
+        updateColumnVisibility('en', hideEn);
+
+        toggleHiBtn.addEventListener('click', () => {
+          const current = root.getAttribute('data-hide-hi') === 'true';
+          updateColumnVisibility('hi', !current);
+        });
+
+        toggleEnBtn.addEventListener('click', () => {
+          const current = root.getAttribute('data-hide-en') === 'true';
+          updateColumnVisibility('en', !current);
+        });
+      }
+
+      initColumnToggles();
+
+      // --- Seen / Selection logic with LocalStorage ---
+      let seenSet = new Set();
+      function loadSeenSet() {
+        try {
+          const raw = localStorage.getItem(STORAGE_SEEN_KEY);
+          if (raw) {
+            const arr = JSON.parse(raw);
+            if (Array.isArray(arr)) {
+              seenSet = new Set(arr.map(String));
+            }
+          }
+        } catch (_) {
+          seenSet = new Set();
+        }
+      }
+
+      function persistSeenSet() {
+        try {
+          localStorage.setItem(STORAGE_SEEN_KEY, JSON.stringify(Array.from(seenSet)));
+        } catch (_) {}
+      }
+
+      loadSeenSet();
+
+      function updateSeenCount() {
+        if (!seenCountEl) return;
+        const count = seenSet.size;
+        if (count > 0) {
+          seenCountEl.textContent = `• ${count} seen`;
+          seenCountEl.style.display = '';
+        } else {
+          seenCountEl.textContent = '';
+          seenCountEl.style.display = 'none';
+        }
+      }
+
+      clearSeenBtn.addEventListener('click', () => {
+        if (seenSet.size === 0) return;
+        if (!confirm('Clear all marked seen words?')) return;
+        seenSet.clear();
+        try {
+          localStorage.removeItem(STORAGE_SEEN_KEY);
+        } catch (_) {}
+        const rows = bodyEl.querySelectorAll('tr[data-id]');
+        rows.forEach((row) => row.classList.remove('is-seen'));
+        updateSeenCount();
+      });
+
+      // Row selection / toggle delegation
+      bodyEl.addEventListener('click', (event) => {
+        // Ignore if user was highlighting / selecting text
+        const sel = window.getSelection();
+        if (sel && sel.toString().trim().length > 0) return;
+
+        const row = event.target.closest('tr[data-id]');
+        if (!row) return;
+
+        const id = String(row.getAttribute('data-id'));
+        if (seenSet.has(id)) {
+          seenSet.delete(id);
+          row.classList.remove('is-seen');
+        } else {
+          seenSet.add(id);
+          row.classList.add('is-seen');
+        }
+        persistSeenSet();
+        updateSeenCount();
       });
 
       function computeFreqRating(rank) {
@@ -506,10 +763,12 @@
 
       function renderRows(items) {
         const html = items.map((item) => {
+          const idStr = String(item.id);
+          const isSeen = seenSet.has(idStr);
           const rating = computeFreqRating(Number(item.id));
           const pct = ((rating - 1) / 4) * 100;
           return `
-            <tr>
+            <tr data-id="${escapeHtml(idStr)}" class="${isSeen ? 'is-seen' : ''}">
               <td class="cell-no">${escapeHtml(item.id)}</td>
               <td class="cell-hi" lang="hi">${escapeHtml(item.hi)}</td>
               <td class="cell-en">${escapeHtml(item.en)}</td>
@@ -526,6 +785,7 @@
 
         bodyEl.innerHTML = html;
         countEl.textContent = items.length + (items.length === 1 ? ' word' : ' words');
+        updateSeenCount();
         syncTitleHeight();
       }
 
