@@ -1,4 +1,4 @@
-# Hindi Vocabulary (`hindi-vocab`)
+# Hindi Vocab (`hindi-vocab`)
 
 An efficient, curated, frequency-ranked dictionary of standard Hindi base headwords designed for language learning and natural language applications.
 
@@ -178,7 +178,7 @@ def get_freq_rating(rank: int, total_words: int = 4800, k: float = 2.0) -> float
 A standalone, single-page web viewer is provided in [`index.html`](file:///home/zenhome/Projects/hindi-vocab/index.html):
 
 * **4-Column Layout**: `No`, `Hindi Word`, `English Word`, and `Freq. Rating`.
-* **Sticky Navigation**: Retains the merged title header (`Hindi Vocabulary`) and column headers as a fixed navbar while scrolling.
+* **Sticky Navigation**: Retains the merged title header (`Hindi Vocab`) and column headers as a fixed navbar while scrolling.
 * **Client-Side Rating**: Automatically evaluates and renders the frequency rating for all 4,800 entries loaded from [`vocab.json`](file:///home/zenhome/Projects/hindi-vocab/vocab.json).
 
 ---
